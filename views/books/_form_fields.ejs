@@ -7,19 +7,7 @@
     <div class="form-item">
         <label>Author</label>
         <select name="author">
-            <!--This part of the code is buggy and needs fixing-->
-            <!-- <% authors.forEach(author => { %>
-                <% if (author.id === book.author) { %>
-                    <option selected label="<%= author.name %>" value="<%= author.id %>">
-                
-                <% } else { %>
-                <option label="<%= author.name %>" value="<% author.id %>">
-                <% } %>
-            <%  }); %> -->
-    
-            <!--Buggy Code Ends Here-->
-    
-            <option value="">Select Author</option> <!-- Default prompt -->
+            <option value="">Select Author</option> 
             <% authors.forEach(author => { %>
                 <option value="<%= author._id %>" <%= author._id.equals(book.author) ? 'selected' : '' %> >
                     <%= author.name %>
@@ -44,7 +32,7 @@
 <div class="form-row">
     <div class="form-item form-item-no-grow">
         <label>Cover</label>
-        <input type="file" name="cover" class="filepond">  
+        <input type="file" name="cover" class="book-cover filepond">  
     </div>
 
     <div class="form-item">
