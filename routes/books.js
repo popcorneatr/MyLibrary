@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
         const newBook = await book.save()
         res.redirect(`books/${newBook.id}`)
     } catch (err) {
-        // console.error(err) // This will log the actual error  
+        // console.error(err)
         renderNewPage(res, book, true)
     }
 })
@@ -153,11 +153,26 @@ async function renderFormPage(res, book, form, hasError = false) {
 }
 
 function saveCover(book, coverEncoded) {
-    if (coverEncoded == null) return
-    const cover = JSON.parse(coverEncoded)
+    // No cover provided
+    if (coverEncoded == null) return; 
+
+    let cover;
+    try {
+        cover = JSON.parse(coverEncoded); 
+    } catch (err) {
+        // console.error('Invalid cover data:', err);
+        return;
+    }
+
     if (cover != null && imageMimeTypes.includes(cover.type)) {
-        book.coverImage = new Buffer.from(cover.data, 'base64') 
-        book.coverImageType = cover.type
+        try {
+            // Save the image as a Buffer
+            book.coverImage = new Buffer.from(cover.data, 'base64'); 
+            // Save the MIME type
+            book.coverImageType = cover.type; 
+        } catch (err) {
+            // console.error('Error processing cover image:', err);
+        }
     }
 }
 
